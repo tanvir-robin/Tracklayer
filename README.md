@@ -1,220 +1,292 @@
+<div align="center">
+
 # TrackLayer
 
-**Live demo → [https://tracklayer.xyz](https://tracklayer.xyz)**
+**Track anything. Pixels, links, files — all in one place.**
 
-A lightweight asset-tracking SaaS. Create tracking pixels, redirect links, and file download assets — then watch views, clicks, and geographic data roll in via a real-time dashboard.
+[![Live](https://img.shields.io/badge/Live%20Demo-tracklayer.xyz-4f46e5?style=for-the-badge&logo=globe&logoColor=white)](https://tracklayer.xyz)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
+[![React](https://img.shields.io/badge/React-Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
+[![Redis](https://img.shields.io/badge/Redis-Cache-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+
+</div>
+
+---
+
+TrackLayer is a self-hosted asset tracking platform. Attach a unique tracking ID to any asset — a pixel in an email, a short redirect link, or a file in cloud storage — and watch real-time analytics come in. Every hit is captured with IP, country, referrer, device type, and timestamp.
+
+<br>
 
 ## Features
 
-- **Tracking Pixel** — embed a 1×1 PNG in any email or page to detect views
-- **Tracking Link** — a redirect URL that logs every click before forwarding
-- **File Downloads** — serve files through a tracked download URL
-- **Real-time dashboard** — live event stream via WebSocket / SSE
-- **Analytics** — daily breakdown, top countries, referrers, unique vs total views
-- **Public analytics page** — optionally share a public analytics view per asset
-- **Contact / support tickets** — built-in ticket submission and tracking
+| | |
+|---|---|
+| **Tracking Pixel** | Embed an invisible 1x1 PNG in emails or web pages to detect views |
+| **Tracking Link** | A redirect URL that silently logs each click before forwarding |
+| **File Downloads** | Serve files through a tracked download endpoint |
+| **Real-time Dashboard** | Live event stream powered by WebSocket |
+| **Analytics** | Daily chart, top countries, referrers, unique vs total views |
+| **Public Analytics** | Share a read-only analytics page per asset, optionally |
+| **Support Tickets** | Built-in contact form and ticket management |
 
-## Stack
+<br>
 
-- **Backend**: Node.js + Express (port 4003)
-- **Frontend**: React + Vite (port 4004)
-- **Database**: MongoDB
-- **Cache**: Redis
-- **Storage**: MinIO (S3-compatible) behind a CDN
+## Tech Stack
 
----
+<div align="center">
 
-## Quick Start (Local Development)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white)
+![MinIO](https://img.shields.io/badge/MinIO-C72E49?style=flat-square&logo=minio&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white)
+
+</div>
+
+<br>
+
+## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 18 or higher
 - MongoDB running on `localhost:27017`
 - Redis running on `localhost:6379`
-- A MinIO (or S3-compatible) instance for file uploads
+- A MinIO or S3-compatible storage bucket
 
-### 1. Backend
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/tanvir-robin/Tracklayer.git
+cd Tracklayer
+```
+
+### 2. Start the backend
 
 ```bash
 cd backend
-cp .env.example .env   # fill in your values
+cp .env.example .env
+# Open .env and fill in your database, JWT secret, and storage credentials
 npm install
 npm run dev
 ```
 
-Backend starts at **http://localhost:4003**
+The API starts at the port you set in `.env` (default `3000`).
 
-### 2. Frontend
+### 3. Start the frontend
 
 ```bash
 cd frontend
-cp .env.example .env   # VITE_API_BASE=http://localhost:4003
+cp .env.example .env
+# Set VITE_API_BASE to your backend URL
 npm install
 npm run dev
 ```
 
-Frontend starts at **http://localhost:4004**
+The frontend dev server starts at `http://localhost:3001`.
 
----
+<br>
 
 ## Environment Variables
 
-### backend/.env
+### `backend/.env`
 
-| Variable          | Description                                              |
-|-------------------|----------------------------------------------------------|
-| `PORT`            | Backend port (default `4003`)                           |
-| `MONGO_URL`       | MongoDB connection string                               |
-| `REDIS_URL`       | Redis connection string                                 |
-| `JWT_SECRET`      | Secret for signing JWTs — use a long random string      |
-| `DEV_TEST_IP`     | Fallback IP for geo-lookup in local dev (e.g. `8.8.8.8`) |
-| `MINIO_ENDPOINT`  | MinIO server URL (e.g. `https://media.example.com`)     |
-| `MINIO_BUCKET`    | Storage bucket name                                     |
-| `MINIO_ACCESS_KEY`| S3 access key                                           |
-| `MINIO_SECRET_KEY`| S3 secret key                                           |
-| `MINIO_CDN_URL`   | Public CDN base URL for served files                    |
+Copy `backend/.env.example` to get started.
 
-See `backend/.env.example` for a template.
+| Variable | Description |
+|---|---|
+| `PORT` | Port the API server listens on |
+| `MONGO_URL` | MongoDB connection string |
+| `REDIS_URL` | Redis connection string |
+| `JWT_SECRET` | Secret for signing JWTs. Use a long random string |
+| `DEV_TEST_IP` | Fallback IP for geo-lookup in local dev (e.g. `8.8.8.8`) |
+| `MINIO_ENDPOINT` | Your MinIO or S3-compatible server URL |
+| `MINIO_BUCKET` | Storage bucket name |
+| `MINIO_ACCESS_KEY` | S3 access key |
+| `MINIO_SECRET_KEY` | S3 secret key |
+| `MINIO_CDN_URL` | CDN base URL in front of storage (optional) |
 
-### frontend/.env
+### `frontend/.env`
 
-| Variable         | Description                              |
-|------------------|------------------------------------------|
-| `VITE_API_BASE`  | Backend API URL (`http://localhost:4003` for dev) |
+| Variable | Description |
+|---|---|
+| `VITE_API_BASE` | Full URL of the backend API (e.g. `http://localhost:3000`) |
 
----
+<br>
 
 ## API Reference
 
 ### Auth
 
-| Method | Path             | Auth | Description    |
-|--------|------------------|------|----------------|
-| POST   | `/auth/register` | No   | Register user  |
-| POST   | `/auth/login`    | No   | Login, get JWT |
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| POST | `/auth/register` | No | Register a new user |
+| POST | `/auth/login` | No | Login and receive a JWT |
 
 ### Assets
 
-| Method | Path                             | Auth | Description                  |
-|--------|----------------------------------|------|------------------------------|
-| GET    | `/assets`                        | Yes  | List all assets               |
-| POST   | `/assets`                        | Yes  | Create asset                  |
-| GET    | `/assets/:id`                    | Yes  | Get asset by ID               |
-| DELETE | `/assets/:id`                    | Yes  | Delete asset                  |
-| POST   | `/assets/upload`                 | Yes  | Upload file asset             |
-| PATCH  | `/assets/:id/toggle-public`      | Yes  | Toggle public analytics       |
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/assets` | Yes | List all assets |
+| POST | `/assets` | Yes | Create a new asset |
+| GET | `/assets/:id` | Yes | Get asset by ID |
+| DELETE | `/assets/:id` | Yes | Delete an asset |
+| POST | `/assets/upload` | Yes | Upload a file asset |
+| PATCH | `/assets/:id/toggle-public` | Yes | Toggle public analytics |
 
-### Tracking (public, no auth)
+### Tracking (no auth required)
 
-| Method | Path                  | Description                         |
-|--------|-----------------------|-------------------------------------|
-| GET    | `/p/:id.png`          | Serve 1×1 tracking pixel            |
-| GET    | `/l/:id`              | Log click + redirect to target URL  |
-| GET    | `/d/:id`              | Log download + redirect to file     |
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/p/:id.png` | Serve 1x1 tracking pixel |
+| GET | `/l/:id` | Log click and redirect to target URL |
+| GET | `/d/:id` | Log download and redirect to file |
 
 ### Analytics
 
-| Method | Path                              | Auth | Description                     |
-|--------|-----------------------------------|------|---------------------------------|
-| GET    | `/analytics/:asset_id`            | Yes  | Full analytics for an asset     |
-| GET    | `/public/analytics/:asset_id`     | No   | Public analytics (if enabled)   |
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/analytics/:asset_id` | Yes | Full analytics for an asset |
+| GET | `/public/analytics/:asset_id` | No | Public analytics (if enabled) |
 
 ### Tickets
 
-| Method | Path           | Auth    | Description           |
-|--------|----------------|---------|-----------------------|
-| GET    | `/tickets`     | Yes     | List your tickets     |
-| POST   | `/tickets`     | No/Yes  | Submit a ticket       |
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/tickets` | Yes | List your tickets |
+| POST | `/tickets` | No | Submit a support ticket |
 
----
+<br>
 
 ## Tracking Usage
 
-### Pixel
+Once you create an asset, you get a tracking ID you can use in any of these formats.
 
+**Pixel** — paste into any HTML email or page:
 ```html
 <img src="https://api.tracklayer.xyz/p/{tracking_id}.png" width="1" height="1" style="display:none" />
 ```
 
-### Link
-
+**Link** — share anywhere you would share a normal URL:
 ```
 https://api.tracklayer.xyz/l/{tracking_id}
 ```
 
-### File Download
-
+**File download** — send to anyone who needs the file:
 ```
 https://api.tracklayer.xyz/d/{tracking_id}
 ```
 
----
+<br>
 
 ## Project Structure
 
 ```
 tracklayer/
 ├── backend/
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── assetController.js
-│   │   ├── trackingController.js
-│   │   ├── analyticsController.js
-│   │   ├── publicController.js
-│   │   └── ticketController.js
-│   ├── routes/
-│   │   ├── auth.js
-│   │   ├── assets.js
-│   │   ├── tracking.js
-│   │   ├── analytics.js
-│   │   └── tickets.js
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── Asset.js
-│   │   ├── Event.js
-│   │   └── Ticket.js
-│   ├── middleware/
-│   │   └── auth.js
-│   ├── services/
-│   │   ├── redis.js
-│   │   ├── storage.js
-│   │   └── websocket.js
-│   ├── utils/
-│   │   └── eventLogger.js
+│   ├── controllers/        # Route handler logic
+│   ├── routes/             # Express routers
+│   ├── models/             # Mongoose schemas (User, Asset, Event, Ticket)
+│   ├── middleware/         # JWT auth middleware
+│   ├── services/           # Redis, MinIO, WebSocket setup
+│   ├── utils/              # Event logger helpers
 │   ├── .env.example
 │   └── server.js
 └── frontend/
     └── src/
-        ├── pages/
-        │   ├── Landing.jsx
-        │   ├── Login.jsx
-        │   ├── Register.jsx
-        │   ├── Dashboard.jsx
-        │   ├── Assets.jsx
-        │   ├── AssetDetail.jsx
-        │   ├── PublicAnalytics.jsx
-        │   └── Contact.jsx
-        ├── components/
-        │   ├── Layout.jsx
-        │   ├── CreateAssetModal.jsx
-        │   └── ProtectedRoute.jsx
-        ├── services/
-        │   └── api.js
-        ├── hooks/
-        │   ├── useAuth.jsx
-        │   └── useEventStream.js
+        ├── pages/          # Landing, Dashboard, Assets, AssetDetail, Contact, etc.
+        ├── components/     # Layout, CreateAssetModal, ProtectedRoute
+        ├── hooks/          # useAuth, useEventStream
+        ├── services/       # API client (axios)
         └── App.jsx
 ```
 
----
+<br>
 
-## Deployment
+## Self-Hosting on a VPS
 
-The project deploys via simple shell scripts:
+> These steps assume a plain Ubuntu or Debian VPS with no control panel (no cPanel, Plesk, etc.).
+
+### 1. Install server dependencies
 
 ```bash
-./deploy.sh          # build frontend + rsync to server
-./deploy-backend.sh  # rsync backend + npm install + pm2 restart + nginx reload
+# Node.js
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs
+
+# MongoDB
+sudo apt install -y mongodb
+
+# Redis
+sudo apt install -y redis-server
+
+# Nginx
+sudo apt install -y nginx
+
+# PM2 — keeps Node running after reboots
+npm install -g pm2
+
+# Certbot — free SSL via Let's Encrypt
+sudo apt install -y certbot python3-certbot-nginx
 ```
 
-The server runs behind Nginx with SSL (Let's Encrypt). Backend is managed by PM2 (`tracklayer-api`).
+### 2. Push the app to your server
+
+Clone the repo on your server and configure your `.env`. Then from your **local machine**, run:
+
+```bash
+./deploy.sh          # builds the frontend and rsyncs dist/ to the server
+./deploy-backend.sh  # rsyncs backend, runs npm install, restarts PM2, reloads Nginx
+```
+
+Both scripts use `rsync` over SSH. Update the `REMOTE` variable at the top of each script to match your server user and hostname.
+
+### 3. Start the backend process
+
+On the very first deploy, SSH into your server and start the PM2 process manually:
+
+```bash
+cd ~/your-app-dir/backend
+pm2 start server.js --name tracklayer-api
+pm2 save
+pm2 startup   # run the command it prints to enable auto-start on reboot
+```
+
+All future deploys will restart it automatically through `deploy-backend.sh`.
+
+### 4. Set up Nginx
+
+Create a config at `/etc/nginx/sites-available/tracklayer` with two server blocks:
+
+- **Frontend** — serve the static `dist/` folder with SPA fallback to `index.html`
+- **API** — reverse proxy to the Node.js process
+
+Enable it and verify:
+
+```bash
+sudo ln -s /etc/nginx/sites-available/tracklayer /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+### 5. Get SSL certificates
+
+```bash
+sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+sudo certbot --nginx -d api.yourdomain.com
+```
+
+Certbot patches your Nginx config automatically and sets up auto-renewal.
+
+<br>
+
+---
+
+<div align="center">
+  <sub>Built with Node.js, React, and MongoDB. Self-hosted and open source.</sub>
+</div>
+
