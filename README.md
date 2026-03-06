@@ -20,6 +20,10 @@
 ---
 
 <div align="center">
+<img width="1536" height="1024" alt="tracklayer_mockups" src="https://github.com/user-attachments/assets/5897c03e-8ea6-40bf-9f2f-fddae187568b" />
+<div align="center">
+
+<div align="center">
 
 ![tracklayer_tour](https://github.com/user-attachments/assets/f296c232-732f-4c4f-8734-09f1b6cda6b1)
 
