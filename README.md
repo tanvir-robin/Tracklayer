@@ -12,6 +12,7 @@
 [![React](https://img.shields.io/badge/React-Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
 [![Redis](https://img.shields.io/badge/Redis-Cache-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 </div>
@@ -60,7 +61,63 @@ TrackLayer is a self-hosted asset tracking platform. Attach a unique tracking ID
 
 <br>
 
-## Getting Started
+## Deploy with Docker (Recommended)
+
+The fastest way to run TrackLayer. Docker Compose starts all six services — Node.js API, React frontend, MongoDB, Redis, MinIO, and Nginx — with a single command. No manual dependency installation required.
+
+### Prerequisites
+
+- [Docker Desktop](https://docs.docker.com/get-docker/) (Mac / Windows) or Docker Engine + Docker Compose plugin (Linux)
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/tanvir-robin/Tracklayer.git
+cd Tracklayer
+```
+
+### 2. Configure environment
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and set at minimum:
+
+| Variable | What to change |
+|---|---|
+| `JWT_SECRET` | Any long random string (e.g. `openssl rand -hex 64`) |
+| `MINIO_ACCESS_KEY` | MinIO username (default `minioadmin` is fine for private deploys) |
+| `MINIO_SECRET_KEY` | MinIO password — change from the default |
+
+All other values are pre-configured to work with the Docker network out of the box.
+
+### 3. Start everything
+
+```bash
+docker compose up -d
+```
+
+That's it. The first run builds the images and may take a couple of minutes.
+
+| Service | URL |
+|---|---|
+| App (frontend + API) | `http://localhost` |
+| MinIO console | `http://localhost:9001` (login with your `MINIO_ACCESS_KEY` / `MINIO_SECRET_KEY`) |
+
+### Useful commands
+
+```bash
+docker compose logs -f          # stream logs from all services
+docker compose logs -f backend  # backend logs only
+docker compose down             # stop everything (data volumes are preserved)
+docker compose down -v          # stop and delete all data volumes
+docker compose pull && docker compose up -d --build  # update to latest
+```
+
+---
+
+## Getting Started (Local Development)
 
 ### Prerequisites
 
@@ -86,46 +143,41 @@ npm install
 npm run dev
 ```
 
-The API starts at the port you set in `.env` (default `3000`).
+The API starts at the port you set in `.env` (default `4003`).
 
 ### 3. Start the frontend
 
 ```bash
 cd frontend
-cp .env.example .env
-# Set VITE_API_BASE to your backend URL
 npm install
 npm run dev
 ```
 
-The frontend dev server starts at `http://localhost:3001`.
+The frontend dev server starts at `http://localhost:4004`. Set `VITE_API_BASE=http://localhost:4003` in `frontend/.env` if the API runs on a different port.
 
 <br>
 
 ## Environment Variables
 
-### `backend/.env`
+A single `.env.example` lives at the repo root. Copy it to `.env` before starting (Docker or manual).
 
-Copy `backend/.env.example` to get started.
+```bash
+cp .env.example .env
+```
 
 | Variable | Description |
 |---|---|
-| `PORT` | Port the API server listens on |
-| `MONGO_URL` | MongoDB connection string |
-| `REDIS_URL` | Redis connection string |
+| `PORT` | Port the API server listens on (default `4003`) |
 | `JWT_SECRET` | Secret for signing JWTs. Use a long random string |
-| `DEV_TEST_IP` | Fallback IP for geo-lookup in local dev (e.g. `8.8.8.8`) |
-| `MINIO_ENDPOINT` | Your MinIO or S3-compatible server URL |
+| `MINIO_ENDPOINT` | MinIO/S3 URL — pre-set to `http://minio:9000` for Docker |
 | `MINIO_BUCKET` | Storage bucket name |
 | `MINIO_ACCESS_KEY` | S3 access key |
 | `MINIO_SECRET_KEY` | S3 secret key |
 | `MINIO_CDN_URL` | CDN base URL in front of storage (optional) |
+| `DEV_TEST_IP` | Fallback IP for geo-lookup in local dev (e.g. `8.8.8.8`) |
+| `VITE_API_BASE` | Frontend API base URL — leave as `/` for Docker |
 
-### `frontend/.env`
-
-| Variable | Description |
-|---|---|
-| `VITE_API_BASE` | Full URL of the backend API (e.g. `http://localhost:3000`) |
+> **Docker note:** `MONGO_URL` and `REDIS_URL` are injected automatically by `docker-compose.yml` using Docker service names and do not need to be set in `.env`.
 
 <br>
 
@@ -198,27 +250,36 @@ https://api.tracklayer.xyz/d/{tracking_id}
 
 ```
 tracklayer/
+├── docker-compose.yml          # all services wired together
+├── .env.example                # single environment file for Docker + manual dev
+├── docker/
+│   └── nginx/
+│       └── default.conf        # reverse proxy: routes / → frontend, /auth|/assets|… → backend
 ├── backend/
-│   ├── controllers/        # Route handler logic
-│   ├── routes/             # Express routers
-│   ├── models/             # Mongoose schemas (User, Asset, Event, Ticket)
-│   ├── middleware/         # JWT auth middleware
-│   ├── services/           # Redis, MinIO, WebSocket setup
-│   ├── utils/              # Event logger helpers
-│   ├── .env.example
+│   ├── Dockerfile
+│   ├── controllers/            # route handler logic
+│   ├── routes/                 # Express routers
+│   ├── models/                 # Mongoose schemas (User, Asset, Event, Ticket)
+│   ├── middleware/             # JWT auth middleware
+│   ├── services/               # Redis, MinIO, WebSocket setup
+│   ├── utils/                  # event logger helpers
 │   └── server.js
 └── frontend/
+    ├── Dockerfile
+    ├── nginx.conf              # static file server config (used inside the frontend container)
     └── src/
-        ├── pages/          # Landing, Dashboard, Assets, AssetDetail, Contact, etc.
-        ├── components/     # Layout, CreateAssetModal, ProtectedRoute
-        ├── hooks/          # useAuth, useEventStream
-        ├── services/       # API client (axios)
+        ├── pages/              # Landing, Dashboard, Assets, AssetDetail, Contact, etc.
+        ├── components/         # Layout, CreateAssetModal, ProtectedRoute
+        ├── hooks/              # useAuth, useEventStream
+        ├── services/           # API client (axios)
         └── App.jsx
 ```
 
 <br>
 
 ## Self-Hosting on a VPS
+
+> **Prefer the Docker path above.** It works on any VPS with Docker installed and requires far less setup. The steps below are for advanced users who want to run services natively (no Docker).
 
 > These steps assume a plain Ubuntu or Debian VPS with no control panel (no cPanel, Plesk, etc.).
 
