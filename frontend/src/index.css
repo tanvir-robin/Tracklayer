@@ -885,9 +885,8 @@ code {
   flex-shrink: 0;
 }
 .landing-logo img {
-  height: 40px;
+  height: 44px;
   width: auto;
-  filter: drop-shadow(0 0 8px rgba(99,102,241,0.45));
 }
 .landing-logo span {
   background: linear-gradient(135deg, #fff 30%, #a78bfa 100%);

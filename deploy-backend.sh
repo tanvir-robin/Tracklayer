@@ -3,7 +3,7 @@ set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKEND_DIR="$REPO_DIR/backend"
-REMOTE="cicd@tracklayer.xyz"
+REMOTE="root@vm.tanvirrobin.dev"
 REMOTE_PATH="~/tracklayer/backend/"
 
 echo "==> Syncing backend to $REMOTE..."

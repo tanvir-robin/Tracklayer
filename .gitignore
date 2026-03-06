@@ -28,3 +28,7 @@ pnpm-debug.log*
 
 # Server-specific config (keep locally, don't publish)
 nginx.conf
+
+# Deploy scripts — contain server addresses and credentials
+deploy.sh
+deploy-backend.sh

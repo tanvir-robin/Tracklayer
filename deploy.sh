@@ -2,7 +2,8 @@
 set -euo pipefail
 
 FRONTEND_DIR="$(cd "$(dirname "$0")/frontend" && pwd)"
-REMOTE="cicd@tracklayer.xyz"
+REMOTE="root@vm.tanvirrobin.dev"
+# REMOTE="cicd@tracklayer.xyz"
 REMOTE_PATH="~/tracklayer/frontend/dist/"
 
 echo "==> Fixing dist ownership..."
