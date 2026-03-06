@@ -8,6 +8,12 @@
 
 <br>
 
+<div align="center">
+<img width="1536" height="1024" alt="tracklayer_mockups 2" src="https://github.com/user-attachments/assets/aa58b983-cc6b-487f-8614-4b013448c842" />
+
+</div>
+
+<br>
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
 [![React](https://img.shields.io/badge/React-Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
@@ -19,10 +25,7 @@
 
 ---
 
-<div align="center">
-<img width="1536" height="1024" alt="tracklayer_mockups 2" src="https://github.com/user-attachments/assets/aa58b983-cc6b-487f-8614-4b013448c842" />
 
-<div align="center">
 
 <div align="center">
 
