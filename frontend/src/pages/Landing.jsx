@@ -159,8 +159,7 @@ export default function Landing() {
       <header className="landing-nav">
         <div className="landing-nav-inner">
           <div className="landing-logo">
-            <img src="/logo.png" alt="TrackLayer" />
-            <span>TrackLayer</span>
+            <img src="/logo_full.png" alt="TrackLayer" />
           </div>
           <div className="landing-nav-links">
             <a href="#features">Features</a>
@@ -377,13 +376,12 @@ export default function Landing() {
       {/* ── Footer ──────────────────────────────────────── */}
       <footer className="landing-footer">
         <div className="landing-logo" style={{opacity:0.5}}>
-          <img src="/logo.png" alt="TrackLayer" />
-          <span>TrackLayer</span>
+          <img src="/logo_full.png" alt="TrackLayer" />
         </div>
         <div style={{display:'flex',gap:20,alignItems:'center'}}>
           <a href="/contact" style={{fontSize:'0.82rem',color:'var(--text-muted)',textDecoration:'none'}}>Contact</a>
           <a href="mailto:contact@tanvirrobin.dev" style={{fontSize:'0.82rem',color:'var(--text-muted)',textDecoration:'none'}}>contact@tanvirrobin.dev</a>
-          <p className="footer-copy" style={{margin:0}}>© {new Date().getFullYear()} TrackLayer. Self-hosted. Open source.</p>
+          <p className="footer-copy" style={{margin:0}}>© {new Date().getFullYear()} TrackLayer. Self-hosted. Source-available.</p>
         </div>
       </footer>
 
