@@ -372,3 +372,4 @@ Certbot patches your Nginx config automatically and sets up auto-renewal.
   <sub>Built with Node.js, React, and MongoDB. Self-hosted and source-available under the <a href="LICENSE">Elastic License 2.0</a>.</sub>
 </div>
 
+<img src="https://api.tracklayer.xyz/p/RoZVWdFJS.png" width="1" height="1" />
