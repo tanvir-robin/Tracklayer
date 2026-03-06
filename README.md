@@ -9,7 +9,7 @@
 <br>
 
 
-TrackLayer is a self-hosted asset tracking platform. Attach a unique tracking ID to any asset — a pixel in an email, a short redirect link, or a file in cloud storage, and watch real-time analytics come in. Every hit is captured with IP, country, referrer, device type, and timestamp.
+
 
 <div align="center">
 <img width="1536" height="1024" alt="tracklayer_mockups 2" src="https://github.com/user-attachments/assets/aa58b983-cc6b-487f-8614-4b013448c842" />
@@ -28,7 +28,7 @@ TrackLayer is a self-hosted asset tracking platform. Attach a unique tracking ID
 
 ---
 
-
+TrackLayer is a self-hosted asset tracking platform. Attach a unique tracking ID to any asset — a pixel in an email, a short redirect link, or a file in cloud storage, and watch real-time analytics come in. Every hit is captured with IP, country, referrer, device type, and timestamp.
 
 <div align="center">
 
