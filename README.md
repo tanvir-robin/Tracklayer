@@ -13,7 +13,7 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
 [![Redis](https://img.shields.io/badge/Redis-Cache-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+[![License](https://img.shields.io/badge/License-Elastic%202.0-blue?style=for-the-badge)](LICENSE)
 
 </div>
 
@@ -138,22 +138,23 @@ cd Tracklayer
 ```bash
 cd backend
 cp .env.example .env
-# Open .env and fill in your database, JWT secret, and storage credentials
+# ⚠️  Set JWT_SECRET in .env before starting
 npm install
 npm run dev
 ```
 
-The API starts at the port you set in `.env` (default `4003`).
+The API starts on `http://localhost:4003`. MongoDB, Redis, and MinIO must already be running locally — see `backend/.env.example` for connection string defaults.
 
 ### 3. Start the frontend
 
 ```bash
-cd frontend
+cd ../frontend
+echo 'VITE_API_BASE=http://localhost:4003' > .env
 npm install
 npm run dev
 ```
 
-The frontend dev server starts at `http://localhost:4004`. Set `VITE_API_BASE=http://localhost:4003` in `frontend/.env` if the API runs on a different port.
+The frontend dev server starts at `http://localhost:4004`.
 
 <br>
 
@@ -358,6 +359,6 @@ Certbot patches your Nginx config automatically and sets up auto-renewal.
 ---
 
 <div align="center">
-  <sub>Built with Node.js, React, and MongoDB. Self-hosted and open source.</sub>
+  <sub>Built with Node.js, React, and MongoDB. Self-hosted and source-available under the <a href="LICENSE">Elastic License 2.0</a>.</sub>
 </div>
 
