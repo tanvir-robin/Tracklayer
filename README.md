@@ -20,7 +20,8 @@
 ---
 
 <div align="center">
-<img width="1536" height="1024" alt="tracklayer_mockups" src="https://github.com/user-attachments/assets/5897c03e-8ea6-40bf-9f2f-fddae187568b" />
+<img width="1536" height="1024" alt="tracklayer_mockups 2" src="https://github.com/user-attachments/assets/aa58b983-cc6b-487f-8614-4b013448c842" />
+
 <div align="center">
 
 <div align="center">
